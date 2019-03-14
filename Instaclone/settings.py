@@ -164,3 +164,4 @@ STATICFILES_DIRS = (
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
+django_heroku.settings(locals())
