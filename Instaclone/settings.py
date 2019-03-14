@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import django_heroku
-import dj_database_url
 from decouple import config,Csv
 from django.conf import settings
 
@@ -35,11 +33,9 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 SECRET_KEY = ('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-ALLOWED_HOSTS='https://insta-adil.herokuapp.com'
-MODE=config("MODE", default="dev")
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -58,7 +54,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -90,29 +85,18 @@ WSGI_APPLICATION = 'Instaclone.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-if config('MODE')=="dev":
 
-    DATABASES = {
-        'default': {
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),            
-        'PORT': '',
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
+           'HOST': config('DB_HOST'),
+           'PORT': '',
     }
 }
 
-# production
-else:
-   DATABASES = {
-       'default': dj_database_url.config(
-           default=config('DATABASE_URL')
-       )
-   }
-
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -164,4 +148,3 @@ STATICFILES_DIRS = (
 
 ACCOUNT_ACTIVATION_DAYS = 7
 
-django_heroku.settings(locals())
