@@ -57,22 +57,26 @@ DATABASES['default'].update(db_from_env)
 
 ALLOWED_HOSTS = []
 
+ACCOUNT_ACTIVATION_DAYS = 7
 
 # Application definition
 
 INSTALLED_APPS = [
-    'bootstrap4',
-    'mainclone',
-    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
+    'mainclone',
+    'registration',
+    'tinymce',
+
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -160,5 +164,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 django_heroku.settings(locals())
 # Extra places for collectstatic to find static files.
 
-ACCOUNT_ACTIVATION_DAYS = 7
 
